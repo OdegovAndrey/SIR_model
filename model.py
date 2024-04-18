@@ -7,31 +7,25 @@ from methods import *
 import numpy as np
 
 class SIR:
-    def __init__(self, eons=1000, Susceptible=1500, Infected=3, Resistant=0, betha=8.3*10**(-4), epsilon=0.75,N = 1,B = 100, mu = 1/144, P = 2,b = 2,pi =10):
-        '''self.eons = eons
-        self.Susceptible = Susceptible
-        self.Infected = Infected
-        self.Resistant = Resistant
-        self.rateSI = rateSI
-        self.rateIR = rateIR
-        self.numIndividuals = Susceptible + Infected + Resistant
-        self.results = None
-        self.modelRun = False'''
-        self.eons = eons
-        self.Susceptible = Susceptible
-        self.Infected = Infected
-        self.Resistant = Resistant
-        self.betha = betha
-        self.epsilon = epsilon
-        self.N = N
-        self.B = B
-        self.b = b
-        self.mu = mu
-        self.P = P
-        self.numIndividuals = Susceptible + Infected + Resistant
+    def __init__(self, cfg):
+        self.Susceptible = cfg.SIR.Susceptible
+        self.Infected = cfg.SIR.Infected
+        self.Resistant = cfg.SIR.Resistant
+        self.betha = cfg.SIR.betha
+        self.epsilon = cfg.SIR.epsilon
+        self.N = cfg.SIR.N
+        self.B = cfg.SIR.B
+        self.b = cfg.SIR.b
+        self.mu = cfg.SIR.mu
+        self.P = cfg.SIR.P
+        self.numIndividuals = cfg.SIR.Susceptible + cfg.SIR.Infected + cfg.SIR.Resistant
         self.results = None
         self.modelRun = False
-        self.pi = pi
+        self.pi = cfg.SIR.pi
+        self.T0 = cfg.SIR.T0
+        self.T1 = cfg.SIR.T1
+        self.H = cfg.SIR.H
+
 
 
     def run(self,method):
@@ -48,16 +42,9 @@ class SIR:
             ]
             )
 
-        T0 = 0
-        T1 = 10
-        H = 0.01                  #TODO: нормальные начальные условия
-        Y0 = np.array([1500, 3, 0])
-        L = -1
+        Y0 = np.array([self.Susceptible, self.Infected, self.Resistant])
 
-
-        t_method, y_method = method(func, Y0, T0, T1, H)
-
-        #print (y_method[:,1])
+        t_method, y_method = method(func, Y0, self.T0, self.T1, self.H)
         self.results = pd.DataFrame.from_dict({'Time':t_method,
             'Susceptible':y_method[:,0], 'Infected':y_method[:,1], 'Resistant':y_method[:,2]},
             orient='index').transpose()
