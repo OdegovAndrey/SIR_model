@@ -1,16 +1,16 @@
 SIR:
   eons: 1000
   T0: 0
-  T1: 10
-  H: 0.01  
-  Susceptible: 1500
-  Infected: 3
+  T1: 100
+  H: 0.001  
+  Susceptible: 1000
+  Infected: 40
   Resistant: 0
-  betha: 8.3e-04
+  betha: 3.3e-03
   epsilon: 0.75
-  N: 1
+  N: 0
   B: 100
-  mu: 0.075
-  P: 2
-  b: 2
-  pi: 10
+  mu: 0.069
+  P: 0
+  b:  0.1
+  pi: 100

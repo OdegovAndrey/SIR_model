@@ -35,7 +35,7 @@ class SIR:
             Resistant = Y[2]
             return np.array(
                 [
-                    self.pi
+                    self.mu * (Susceptible + Infected +Resistant)
                     - self.betha * Susceptible * Infected
                     - self.epsilon * self.P * Susceptible
                     + (1 - self.epsilon) * self.N * Infected
@@ -71,7 +71,7 @@ class SIR:
         ).transpose()
         self.modelRun = True
 
-    def plot(self):
+    def plot(self,index = 1):
         if self.modelRun == False:
             print("Error: Model has not run. Please call SIR.run()")
             return
@@ -89,6 +89,9 @@ class SIR:
             fancybox=True,
             shadow=True,
         )
-        plt.title(r"beta = -, gamma = -")
-        plt.savefig("test.png")
+        S_p = (self.Susceptible + self.Infected + self.Resistant) /(self.betha * self.Susceptible / (self.b + self.mu))
+        I_p = (self.Susceptible + self.Infected + self.Resistant) * (self.mu / (self.mu + self.b)) /(1 - 1 / self.betha * self.Susceptible / (self.b + self.mu))
+        R_p = (self.Susceptible + self.Infected + self.Resistant) * (self.b / (self.mu + self.b)) /(1 - 1 / self.betha * self.Susceptible / (self.b + self.mu))
+        plt.title(f"ep_coef = {self.betha * self.Susceptible / (self.b + self.mu)} \nS_p = {S_p}\n I_p{I_p}\n R_p{R_p}")
+        plt.savefig(r"test{index}.png")
         plt.close()
