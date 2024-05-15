@@ -1,7 +1,29 @@
 import numpy as np
+from typing import Callable
+
+"""
+Функции для численного решения систем обыкновенных дифференциальных уравнений.
+
+Все функции принимают следующие параметры:
+    f (Callable[[list[float], list[float]], list[float]]): Функция, задающая правую часть системы ОДУ.
+    y0 (float): Начальное условие для решения.
+    t0 (float): Начальное значение независимой переменной.
+    t1 (float): Конечное значение независимой переменной.
+    h (float): Шаг интегрирования.
+
+Все функции возвращают кортеж (tuple[np.ndarray, np.ndarray]), содержащий массивы
+со значениями независимой переменной и решения системы ОДУ.
+"""
 
 
-def euler_method(f, y0, t0, t1, h):
+def euler_method(
+    f: Callable[[list[float], list[float]], list[float]],
+    y0: float,
+    t0: float,
+    t1: float,
+    h: float,
+):
+    """Метод Эйлера"""
 
     t_values = np.arange(t0, t1, h)
     y_values = np.zeros((len(t_values), len(y0)))
@@ -12,7 +34,14 @@ def euler_method(f, y0, t0, t1, h):
     return t_values, y_values
 
 
-def euler_modified_method(f, y0, t0, t1, h):
+def euler_modified_method(
+    f: Callable[[list[float], list[float]], list[float]],
+    y0: float,
+    t0: float,
+    t1: float,
+    h: float,
+):
+    """Метод Эйлера с пересчетом"""
 
     t_values = np.arange(t0, t1, h)
     y_values = np.zeros((len(t_values), len(y0)))
@@ -26,7 +55,14 @@ def euler_modified_method(f, y0, t0, t1, h):
     return t_values, y_values
 
 
-def runge_kutta_4th_order(f, y0, t0, t1, h):
+def runge_kutta_4th_order(
+    f: Callable[[list[float], list[float]], list[float]],
+    y0: float,
+    t0: float,
+    t1: float,
+    h: float,
+):
+    """Метод Рунге-Кутты 4 порядка"""
 
     t_values = np.arange(t0, t1, h)
     y_values = np.zeros((len(t_values), len(y0)))
@@ -43,7 +79,14 @@ def runge_kutta_4th_order(f, y0, t0, t1, h):
     return t_values, y_values
 
 
-def adams_bashforth_4th_order(f, y0, t0, t1, h):
+def adams_bashforth_4th_order(
+    f: Callable[[list[float], list[float]], list[float]],
+    y0: float,
+    t0: float,
+    t1: float,
+    h: float,
+):
+    """Метод Адамса-Бешфорта 4 порядка"""
 
     t_values = np.arange(t0, t1, h)
     y_values = np.zeros((len(t_values), len(y0)))
@@ -67,7 +110,14 @@ def adams_bashforth_4th_order(f, y0, t0, t1, h):
     return t_values, y_values
 
 
-def adams_bashforth_moulton_4th_order(f, y0, t0, t1, h):
+def adams_bashforth_moulton_4th_order(
+    f: Callable[[list[float], list[float]], list[float]],
+    y0: float,
+    t0: float,
+    t1: float,
+    h: float,
+):
+    """Метод Адамса-Бешфорта-Моултона"""
 
     t_values = np.arange(t0, t1, h)
     y_values = np.zeros((len(t_values), len(y0)))
@@ -98,7 +148,14 @@ def adams_bashforth_moulton_4th_order(f, y0, t0, t1, h):
     return t_values, y_values
 
 
-def gear_4th_order(f, y0, t0, t1, h):
+def gear_4th_order(
+    f: Callable[[list[float], list[float]], list[float]],
+    y0: float,
+    t0: float,
+    t1: float,
+    h: float,
+):
+    """Метод Гира 4 порядка"""
 
     t_values = np.arange(t0, t1, h)
     num_steps = int((t1 - t0) / h) + 1

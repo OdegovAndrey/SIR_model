@@ -42,11 +42,13 @@ class SIR:
                     - self.mu * Susceptible
                     + self.epsilon * self.P * Resistant
                     - (1 - self.epsilon) * self.N * Susceptible,
+
                     self.betha * Susceptible * Infected
                     + self.epsilon * self.P * Susceptible
                     - (1 - self.epsilon) * self.N * Infected
                     - self.mu * Infected
                     - self.b * Infected,
+                    
                     self.b * Infected
                     + (1 - self.epsilon) * self.N * Susceptible
                     - self.mu * Resistant
@@ -63,6 +65,7 @@ class SIR:
                 "Susceptible": y_method[:, 0],
                 "Infected": y_method[:, 1],
                 "Resistant": y_method[:, 2],
+                "Dead": self.numIndividuals - y_method[:, 0] - y_method[:, 1] - y_method[:, 2]
             },
             orient="index",
         ).transpose()
