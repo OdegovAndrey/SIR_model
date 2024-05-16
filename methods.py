@@ -78,6 +78,30 @@ def runge_kutta_4th_order(
 
     return t_values, y_values
 
+def Runge_Kutta_Felberg(
+    f: Callable[[list[float], list[float]], list[float]],
+    y0: float,
+    t0: float,
+    t1: float,
+    h: float,
+):
+    """Метод Рунге-Кутты-Фельберга 5 порядка"""
+
+    t_values = np.arange(t0, t1, h)
+    y_values = np.zeros((len(t_values), len(y0)))
+    y_values[0] = y0
+
+    for i in range(1, len(t_values)):
+        k1 = h * f(y_values[i - 1], t_values[i - 1])
+        k2 = h*f(y + k1/4, t_values[i-1] + h/4)
+        k3 = h*f(y_values[i-1] + 3*k1/32 + 9*k2/32, t_values[i-1] + 3*h/8)
+        k4 = h*f(y_values[i-1] + 1932/2197*k1 - 7200/2197*k2 + 7296/2197*k3, t_values[i-1] + 12*h/13)
+        k5 = h*f(y_values[i-1] + 439/216*k1 - 8*k2 + 3680/513*k3 - 845/4104 * k4, t_values[i-1] + h)
+        k6 = h*f(y_values[i-1] - 8/27 * k1 + 2*k2 - 3544/2565*k3 + 1859/4104*k4 - 11/40*k5, t_values[i-1] + h/2)
+
+        y_values[i] = y_values[i - 1] + 16/135 * k1 + 6656/12825 * k3 + 28561/56430 * k4 - 9/50 * k5 + 2/55 * k6
+
+    return t_values, y_values
 
 def adams_bashforth_4th_order(
     f: Callable[[list[float], list[float]], list[float]],
