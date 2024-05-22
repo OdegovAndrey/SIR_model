@@ -93,7 +93,7 @@ def Runge_Kutta_Felberg(
 
     for i in range(1, len(t_values)):
         k1 = h * f(y_values[i - 1], t_values[i - 1])
-        k2 = h*f(y + k1/4, t_values[i-1] + h/4)
+        k2 = h*f(y_values[i - 1] + k1/4, t_values[i-1] + h/4)
         k3 = h*f(y_values[i-1] + 3*k1/32 + 9*k2/32, t_values[i-1] + 3*h/8)
         k4 = h*f(y_values[i-1] + 1932/2197*k1 - 7200/2197*k2 + 7296/2197*k3, t_values[i-1] + 12*h/13)
         k5 = h*f(y_values[i-1] + 439/216*k1 - 8*k2 + 3680/513*k3 - 845/4104 * k4, t_values[i-1] + h)
